@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 濟州島冒險之旅</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+
+  :root {
+    --cream: #FDFAF4;
+    --sand: #F5EDD6;
+    --coral: #E8735A;
+    --teal: #3A9B8C;
+    --navy: #1E3A5F;
+    --gold: #F2B705;
+    --south-blue: #5BA4CF;
+    --west-purple: #8B6FBF;
+    --north-pink: #E85B8A;
+    --east-orange: #E8A030;
+    --text: #2C1810;
+    --light: #fff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 20% 80%, rgba(58,155,140,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(242,183,5,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60% at 50% 50%, rgba(232,115,90,0.15) 0%, transparent 70%);
+  }
+
+  /* grid pattern */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .hero-content { position: relative; text-align: center; padding: 2rem; }
+
+  .hero-year {
+    font-size: clamp(5rem, 15vw, 12rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255,255,255,0.15);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: var(--light);
+    letter-spacing: 0.05em;
+    margin-top: -1rem;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+  }
+
+  .hero-subtitle {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .hero-dates {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-dates .badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--light);
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    backdrop-filter: blur(4px);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .scroll-hint::after {
+    content: '↓';
+    font-size: 1.2rem;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+  }
+
+  .nav-tabs::-webkit-scrollbar { display: none; }
+
+  .nav-tab {
+    flex: none;
+    padding: 1rem 1.5rem;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+  }
+
+  .nav-tab:hover { color: rgba(255,255,255,0.85); }
+
+  .nav-tab.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 5rem 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* ── TIMELINE ── */
+  #itinerary { max-width: 1100px; margin: 0 auto; padding: 5rem 1.5rem; }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .tl-day {
+    background: var(--sand);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tl-day:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 1; }
+
+  .tl-day .date-box {
+    padding: 1.2rem 1rem;
+    font-size: 1.3rem;
+    font-weight: 900;
+    text-align: center;
+    color: var(--light);
+  }
+
+  .tl-day .region-box {
+    flex: 1;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: #fff;
+  }
+
+  .tl-day .region-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .day-fly .date-box { background: var(--teal); }
+  .day-south .date-box { background: var(--south-blue); }
+  .day-west .date-box { background: var(--west-purple); }
+  .day-north .date-box { background: var(--north-pink); }
+  .day-east .date-box { background: var(--east-orange); }
+
+  /* ── REGION CARDS ── */
+  .region-section { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+
+  .region-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid;
+  }
+
+  .region-header h2 {
+    font-size: 2rem;
+    font-weight: 900;
+  }
+
+  .region-header .day-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    color: #fff;
+    letter-spacing: 0.05em;
+  }
+
+  .region-south .region-header { border-color: var(--south-blue); }
+  .region-south .region-header h2 { color: var(--south-blue); }
+  .region-south .day-badge { background: var(--south-blue); }
+
+  .region-west .region-header { border-color: var(--west-purple); }
+  .region-west .region-header h2 { color: var(--west-purple); }
+  .region-west .day-badge { background: var(--west-purple); }
+
+  .region-north .region-header { border-color: var(--north-pink); }
+  .region-north .region-header h2 { color: var(--north-pink); }
+  .region-north .day-badge { background: var(--north-pink); }
+
+  .region-east .region-header { border-color: var(--east-orange); }
+  .region-east .region-header h2 { color: var(--east-orange); }
+  .region-east .day-badge { background: var(--east-orange); }
+
+  .spots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .spot-card {
+    background: #fff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .spot-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .spot-card .spot-header {
+    padding: 1rem;
+    font-weight: 900;
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .region-south .spot-header { background: var(--south-blue); }
+  .region-west .spot-header { background: var(--west-purple); }
+  .region-north .spot-header { background: var(--north-pink); }
+  .region-east .spot-header { background: var(--east-orange); }
+
+  .spot-card .spot-body {
+    padding: 1rem;
+  }
+
+  .spot-card .spot-body li {
+    list-style: none;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: #555;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .spot-card .spot-body li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: #ccc;
+  }
+
+  /* warn badge */
+  .warn {
+    display: inline-block;
+    background: #FFF3CD;
+    border: 1px solid #F2B705;
+    color: #856404;
+    font-size: 0.75rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  /* ── NOTICES ── */
+  #notices { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+
+  .notice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .notice-card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-left: 4px solid var(--coral);
+  }
+
+  .notice-num {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--coral);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2.5rem;
+  }
+
+  .notice-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #444;
+  }
+
+  .notice-text strong { color: var(--text); }
+
+  /* ── FOOD ── */
+  #food { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+
+  .food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .food-card {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.18s;
+  }
+
+  .food-card:hover { transform: translateY(-3px); }
+
+  .food-area {
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: var(--sand);
+    color: var(--text);
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.4rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .food-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .food-sub {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.15rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* divider */
+  .divider {
+    height: 1px;
+    background: rgba(0,0,0,0.07);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* animated entrance */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 700px) {
+    .timeline {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .spots-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .timeline { grid-template-columns: repeat(2, 1fr); }
+    .spots-grid { grid-template-columns: 1fr; }
+    .food-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-year">2026</div>
+    <div class="hero-title">濟州島冒險之旅</div>
+    <div class="hero-subtitle">Jeju Island Adventure</div>
+    <div class="hero-dates">
+      <span class="badge">✈️ 8/14 出發</span>
+      <span class="badge">🏝 4天探索</span>
+      <span class="badge">✈️ 8/19 返程</span>
+    </div>
+  </div>
+  <div class="scroll-hint">向下滑動</div>
+</div>
+
+<!-- NAV -->
+<nav class="nav-tabs" id="mainNav">
+  <button class="nav-tab active" onclick="scrollTo('itinerary')">📅 行程總覽</button>
+  <button class="nav-tab" onclick="scrollTo('south')">🔵 南部 8/15</button>
+  <button class="nav-tab" onclick="scrollTo('west')">🟣 西部 8/16</button>
+  <button class="nav-tab" onclick="scrollTo('north')">🩷 北部 8/17</button>
+  <button class="nav-tab" onclick="scrollTo('east')">🟠 東部 8/18</button>
+  <button class="nav-tab" onclick="scrollTo('food')">🍽 美食清單</button>
+  <button class="nav-tab" onclick="scrollTo('notices')">⚠️ 注意事項</button>
+</nav>
+
+<!-- ITINERARY TIMELINE -->
+<div id="itinerary">
+  <div class="section-title fade-in">📅 六天行程總覽</div>
+  <div class="timeline fade-in">
+    <!-- 8/14 -->
+    <div class="tl-day day-fly" onclick="scrollTo('south')">
+      <div class="date-box">8/14</div>
+      <div class="region-box"><span>✈️</span><span class="region-label">出發日</span></div>
+    </div>
+    <!-- 8/15 -->
+    <div class="tl-day day-south" onclick="scrollTo('south')">
+      <div class="date-box">8/15</div>
+      <div class="region-box"><span>🌊</span><span class="region-label">南部</span></div>
+    </div>
+    <!-- 8/16 -->
+    <div class="tl-day day-west" onclick="scrollTo('west')">
+      <div class="date-box">8/16</div>
+      <div class="region-box"><span>🎡</span><span class="region-label">西部</span></div>
+    </div>
+    <!-- 8/17 -->
+    <div class="tl-day day-north" onclick="scrollTo('north')">
+      <div class="date-box">8/17</div>
+      <div class="region-box"><span>🏖</span><span class="region-label">北部</span></div>
+    </div>
+    <!-- 8/18 -->
+    <div class="tl-day day-east" onclick="scrollTo('east')">
+      <div class="date-box">8/18</div>
+      <div class="region-box"><span>🐄</span><span class="region-label">東部</span></div>
+    </div>
+    <!-- 8/19 -->
+    <div class="tl-day day-fly">
+      <div class="date-box">8/19</div>
+      <div class="region-box"><span>✈️</span><span class="region-label">返程日</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SOUTH -->
+<div class="region-section region-south" id="south">
+  <div class="region-header fade-in">
+    <h2>濟州島南部</h2>
+    <span class="day-badge">8/15</span>
+  </div>
+  <div class="spots-grid">
+    <div class="spot-card fade-in">
+      <div class="spot-header">山房山樂園</div>
+      <div class="spot-body"><ul>
+        <li>🚗 1h 車程</li>
+        <li>💰 $5000／人</li>
+        <li>復古遊樂園</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">柱結理帶</div>
+      <div class="spot-body"><ul>
+        <li>🚗 23min</li>
+        <li>坐快艇去看柱結理帶</li>
+        <li>刺激會甩尾</li>
+        <li>💰 ₩30000／人</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">藥泉寺</div>
+      <div class="spot-body"><ul>
+        <li>🚗 6min</li>
+        <li>最大的寺廟</li>
+        <li>治百病的神水</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">橘子咖啡廳</div>
+      <div class="spot-body"><ul>
+        <li>🚗 15min</li>
+        <li>漂亮咖啡廳</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">偶來市場</div>
+      <div class="spot-body"><ul>
+        <li>🚗 9min</li>
+        <li>小吃 / 水果</li>
+        <li>便宜紀念品</li>
+        <li>橘子麻糬 👍</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">李仲燮故居</div>
+      <div class="spot-body"><ul>
+        <li>藝術街</li>
+        <li>哩哩摳摳小店</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WEST -->
+<div class="region-section region-west" id="west">
+  <div class="region-header fade-in">
+    <h2>濟州島西部</h2>
+    <span class="day-badge">8/16</span>
+    <span class="warn">⚠️ 這天要穿布鞋</span>
+  </div>
+  <div class="spots-grid">
+    <div class="spot-card fade-in">
+      <div class="spot-header">9.81公園</div>
+      <div class="spot-body"><ul>
+        <li>🚗 40min</li>
+        <li>🕘 9:00 ~ 11:00</li>
+        <li>門票 ₩700／人（早鳥 kkday）</li>
+        <li>無重力賽車</li>
+        <li>電子遊樂設施</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">涯月邑</div>
+      <div class="spot-body"><ul>
+        <li>🚗 17min</li>
+        <li>玻璃船 ₩15000／人</li>
+        <li>沙灘 + 咖啡廳</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">Naraba</div>
+      <div class="spot-body"><ul>
+        <li>🚗 11min</li>
+        <li>浮誇海鮮麵</li>
+        <li>💰 ₩11000 ~ 15900</li>
+        <li>🕘 10:00 ~ 16:30</li>
+        <li>（14:00~15:00 休息）</li>
+        <li>（週四公休）</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">紅白馬燈塔</div>
+      <div class="spot-body"><ul>
+        <li>🚗 15min</li>
+        <li>打卡景點</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">樂天超市 E-mart</div>
+      <div class="spot-body"><ul>
+        <li>補貨零食！！</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- NORTH -->
+<div class="region-section region-north" id="north">
+  <div class="region-header fade-in">
+    <h2>濟州島北部</h2>
+    <span class="day-badge">8/17</span>
+  </div>
+  <div class="spots-grid">
+    <div class="spot-card fade-in">
+      <div class="spot-header">咸德海灘</div>
+      <div class="spot-body"><ul>
+        <li>🕘 早上 ~ 10點</li>
+        <li>玩水</li>
+        <li>浮潛 ₩20000</li>
+        <li>海底漫步 ₩80000</li>
+        <li>海女包飯</li>
+        <li>回飯店</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">黑豬肉一條街</div>
+      <div class="spot-body"><ul>
+        <li>🚗 25min</li>
+        <li>🕘 12:00</li>
+        <li>吃午餐</li>
+        <li>Dombe 餐廳</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">東門市場</div>
+      <div class="spot-body"><ul>
+        <li>小吃</li>
+        <li>哩哩摳摳</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">寶健路</div>
+      <div class="spot-body"><ul>
+        <li>🚗 15min</li>
+        <li>逛街</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">亂打秀</div>
+      <div class="spot-body"><ul>
+        <li>🚗 15min</li>
+        <li>門票 $700／人（台幣）</li>
+        <li>🕘 16:30 ~ 18:00</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EAST -->
+<div class="region-section region-east" id="east">
+  <div class="region-header fade-in">
+    <h2>濟州島東部</h2>
+    <span class="day-badge">8/18</span>
+  </div>
+  <div class="spots-grid">
+    <div class="spot-card fade-in">
+      <div class="spot-header">牛島</div>
+      <div class="spot-body"><ul>
+        <li>🚗 40min</li>
+        <li>🕘 9:30 坐船出發</li>
+        <li>來回 ₩11000</li>
+        <li>租電動車</li>
+        <li>花生冰淇淋</li>
+        <li>炸豬排 / 漢拿山炒飯</li>
+        <li>海女之家</li>
+        <li>黑 / 白沙灘</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">城山日出峰</div>
+      <div class="spot-body"><ul>
+        <li>不買門票</li>
+        <li>海女表演 14:00</li>
+        <li>苦盡甘來遇見你拍攝場地</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">涉地可知</div>
+      <div class="spot-body"><ul>
+        <li>風景</li>
+        <li>藍色生死戀拍攝場地</li>
+      </ul></div>
+    </div>
+    <div class="spot-card fade-in">
+      <div class="spot-header">婚姻池</div>
+      <div class="spot-body"><ul>
+        <li>繡球花</li>
+        <li>神明凡人結婚生出濟州島人</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FOOD -->
+<div id="food" style="padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto;">
+  <div class="section-title fade-in">🍽 好吃ㄉ美食清單</div>
+  <div class="food-grid">
+    <div class="food-card fade-in"><span class="food-area">牛島</span><div><div class="food-name">豬排店 우도 로카</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">咸德</span><div><div class="food-name">海女包飯</div><div class="food-sub">炸紫菜飯卷</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">咸德</span><div><div class="food-name">熟成到</div><div class="food-sub">黑豬肉</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">黑豬肉一條街</span><div><div class="food-name">Dombe</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">市區</span><div><div class="food-name">Moon sso</div><div class="food-sub">海鮮咖哩</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">市區</span><div><div class="food-name">黃銅盆王排骨 ✨</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">咸德</span><div><div class="food-name">章魚麵</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">不限</span><div><div class="food-name">漢拿山炒飯</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">涯月</span><div><div class="food-name">海鮮麵</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">不限</span><div><div class="food-name">烤帶魚</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">市區</span><div><div class="food-name">Baro烤豬蹄</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">市區</span><div><div class="food-name">嘟嘟嚕韓牛與黑豬</div></div></div>
+    <div class="food-card fade-in"><span class="food-area">市區</span><div><div class="food-name">32 Seosa-ro</div><div class="food-sub">韓牛</div></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- NOTICES -->
+<div id="notices" style="padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto;">
+  <div class="section-title fade-in">⚠️ 注意事項</div>
+  <div class="notice-grid">
+    <div class="notice-card fade-in">
+      <div class="notice-num">1</div>
+      <div class="notice-text"><strong>帶把傘</strong><br>濟州島陰晴不定，可以帶一支傘備用！</div>
+    </div>
+    <div class="notice-card fade-in">
+      <div class="notice-num">2</div>
+      <div class="notice-text"><strong>防曬擦滿</strong><br>太陽會很恐怖，防曬要好好擦滿！</div>
+    </div>
+    <div class="notice-card fade-in">
+      <div class="notice-num">3</div>
+      <div class="notice-text"><strong>自備盥洗用品</strong><br>飯店不提供：牙刷、牙膏、刮鬍刀、梳子、護髮</div>
+    </div>
+    <div class="notice-card fade-in">
+      <div class="notice-num">4</div>
+      <div class="notice-text"><strong>能尿就先尿</strong><br>公共廁所很少，把握每個機會！</div>
+    </div>
+    <div class="notice-card fade-in">
+      <div class="notice-num">5</div>
+      <div class="notice-text"><strong>帶萬國充</strong><br>有萬國充可以帶，飯店的被借完就沒有了！</div>
+    </div>
+    <div class="notice-card fade-in">
+      <div class="notice-num">6</div>
+      <div class="notice-text"><strong>準時集合！</strong><br>這幾天都是早去早回，遲到的人要請大家喝飲料 🥤</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  2026 濟州島冒險之旅 · 玩得開心 · 平安回家 🏝️
+</footer>
+
+<script>
+  // Smooth scroll to section
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Fade-in observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Active nav highlight on scroll
+  const sections = ['itinerary', 'south', 'west', 'north', 'east', 'food', 'notices'];
+  const tabs = document.querySelectorAll('.nav-tab');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = sections.indexOf(e.target.id);
+        if (idx >= 0) {
+          tabs.forEach(t => t.classList.remove('active'));
+          if (tabs[idx]) tabs[idx].classList.add('active');
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) navObserver.observe(el);
+  });
+</script>
+</body>
+</html>
