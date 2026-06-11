@@ -472,7 +472,22 @@
   }
 
   /* ── HOTEL ── */
-  .hotel-section { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+  .hotel-section { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; position: relative; }
+
+  .hotel-bg-wrapper {
+    background-image: url('https://raw.githubusercontent.com/riolin324/Jeju2026/main/hotel.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .hotel-bg-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 248, 235, 0.83);
+    backdrop-filter: blur(2px);
+  }
 
   .hotel-header {
     display: flex;
@@ -843,6 +858,7 @@
 <div class="divider"></div>
 
 <!-- HOTEL -->
+<div class="hotel-bg-wrapper">
 <div class="hotel-section" id="hotel">
   <div class="hotel-header fade-in">
     <h2>🏨 飯店資訊</h2>
@@ -873,6 +889,7 @@
       <p>⚠️ 泳池要穿泳衣、戴泳帽（鴨舌帽）</p>
       <p>⚠️ 房間毛巾不能帶到泳池使用</p>
     </div>
+  </div>
   </div>
 </div>
 
